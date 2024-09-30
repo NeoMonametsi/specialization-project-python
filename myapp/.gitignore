@@ -1,0 +1,39 @@
+# created by virtualenv automatically
+# Python Bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+env/
+venv/
+*.env
+
+# Django Secret Key
+*.log
+*.sqlite3
+db.sqlite3
+*.pyc
+*.pyo
+
+# Media Files
+media/
+
+# Static Files (if you are using collectstatic)
+staticfiles/
+static/
+
+# IDE Specific
+.idea/
+.vscode/
+*.sublime-workspace
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Python Packages
+*.egg-info/
+dist/
+build/
+

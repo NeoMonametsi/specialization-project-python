@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Prediction App</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'forecast/styles.css' %}">
+</head>
+<body>
+    <h1>Weather Insights at Your Fingertips!</h1>
+    <a href="{% url 'index.html' %}">Back to Home</a> 
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather %}
+        <h2>Weather in {{ weather.name }}</h2>
+        <p>Temperature: {{ weather.main.temp }} °C</p>
+        <p>Weather: {{ weather.weather.0.description }}</p>
+        <p>Humidity: {{ weather.main.humidity }}%</p>
+        <p>Wind Speed: {{ weather.wind.speed }} m/s</p>
+    {% endif %}
+    
+</body>
+</html>
