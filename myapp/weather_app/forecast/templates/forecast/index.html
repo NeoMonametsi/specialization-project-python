@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Weather Insights at Your Fingertips!</h1>
-    <a href="{% url 'index.html' %}">Back to Home</a> 
+ 
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -22,6 +22,13 @@
         <p>Humidity: {{ weather.main.humidity }}%</p>
         <p>Wind Speed: {{ weather.wind.speed }} m/s</p>
     {% endif %}
+
+
+    <ul>
+        <li><a href="{% url 'register' %}">Register</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'feedback' %}">Feedback</a></li>
+    </ul>
     
 </body>
 </html>

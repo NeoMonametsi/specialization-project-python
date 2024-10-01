@@ -1,11 +1,12 @@
 import requests
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .forms import LocationForm
 from .forms import FeedbackForm 
 from django.views import View
 from django.contrib.auth.decorators import login_required
-
-
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 def get_weather_data(location):
     api_key = 'd0b04578a68adad4daf401c3c34ea27c'
     url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
@@ -42,4 +43,39 @@ def feedback_view(request):
 class HomeView(View):
     def get(self, request):
         return render(request, 'index.html')
+    
+
+def register(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists')
+            return redirect('register')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists')
+            return redirect('register')
+        else:
+            User.objects.create_user(username=username, email=email, password=password)
+            messages.success(request, 'Registration successful! You can now log in.')
+            return redirect('login')
+
+    return render(request, 'register.html')
+                        
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')  # Redirect to home or another page after login
+        else:
+            messages.error(request, 'Invalid username or password.')
+    return render(request, 'login.html')
+
+def success_view(request):
+    return render(request, 'success.html') 
 # Create your views here.
